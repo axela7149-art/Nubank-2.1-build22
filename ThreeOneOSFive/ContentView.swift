@@ -294,40 +294,46 @@ struct ContentView: View {
                         .foregroundStyle(Color(uiColor: .secondaryLabel))
                     VStack(alignment: .leading, spacing: 0) {
                         Link(destination: URL(string: "https://www.mediafire.com/file/narj0rnm9jc029h/MACIELDNSNOVA.bpf/file")!) {
-                            HStack(spacing: 12) {
+                            HStack(spacing: 14) {
                                 Image(systemName: "arrow.down.circle.fill")
-                                    .font(.system(size: 21, weight: .semibold))
-                                VStack(alignment: .leading, spacing: 3) {
+                                    .font(.system(size: 22, weight: .bold))
+                                VStack(alignment: .leading, spacing: 4) {
                                     Text("DNS BY MACIEL")
-                                        .font(.system(size: 14, weight: .semibold))
+                                        .font(.system(size: 15, weight: .bold))
                                     Text("Arquivo .bpf atualizado")
-                                        .font(.system(size: 11))
-                                        .foregroundStyle(Color(uiColor: .secondaryLabel))
+                                        .font(.system(size: 11, weight: .medium))
+                                        .opacity(0.68)
                                 }
-                                Spacer()
+                                Spacer(minLength: 8)
                                 Image(systemName: "arrow.up.right")
+                                    .font(.system(size: 15, weight: .bold))
                             }
-                            .foregroundStyle(AppTheme.accent)
-                            .padding(14)
+                            .foregroundStyle(Color.black)
+                            .padding(.horizontal, 16)
+                            .frame(minHeight: 58)
                         }
-                        Rectangle().fill(AppTheme.accent.opacity(0.10)).frame(height: 0.5)
+                        .buttonStyle(MonochromeActionButtonStyle(filled: true))
+                        Rectangle().fill(AppTheme.accent.opacity(0.12)).frame(height: 0.5)
                         Link(destination: URL(string: "https://apps.apple.com/app/id6785326793")!) {
-                            HStack(spacing: 12) {
+                            HStack(spacing: 14) {
                                 Image(systemName: "arrow.up.right.square.fill")
-                                    .font(.system(size: 21, weight: .semibold))
-                                VStack(alignment: .leading, spacing: 3) {
+                                    .font(.system(size: 22, weight: .bold))
+                                VStack(alignment: .leading, spacing: 4) {
                                     Text("Baixar aplicativo para colocar o DNS")
-                                        .font(.system(size: 14, weight: .semibold))
+                                        .font(.system(size: 15, weight: .bold))
                                     Text("Abrir na App Store")
-                                        .font(.system(size: 11))
+                                        .font(.system(size: 11, weight: .medium))
                                         .foregroundStyle(Color(uiColor: .secondaryLabel))
                                 }
-                                Spacer()
+                                Spacer(minLength: 8)
                                 Image(systemName: "arrow.up.right")
+                                    .font(.system(size: 15, weight: .bold))
                             }
-                            .foregroundStyle(AppTheme.accent)
-                            .padding(14)
+                            .foregroundStyle(Color.white)
+                            .padding(.horizontal, 16)
+                            .frame(minHeight: 58)
                         }
+                        .buttonStyle(MonochromeActionButtonStyle(filled: false))
                     }
                     .background(Color.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 17, style: .continuous))
                     .overlay { RoundedRectangle(cornerRadius: 17, style: .continuous).strokeBorder(AppTheme.accent.opacity(0.35), lineWidth: 1) }
@@ -949,6 +955,31 @@ private struct AnimatedGameTitle: View {
     }
 }
 
+private struct MonochromeActionButtonStyle: ButtonStyle {
+    let filled: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(filled ? Color.white : Color.white.opacity(0.045), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(Color.white.opacity(filled ? 0.0 : 0.34), lineWidth: 1)
+            }
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .opacity(configuration.isPressed ? 0.82 : 1.0)
+            .animation(.easeOut(duration: 0.16), value: configuration.isPressed)
+    }
+}
+
+private struct MonochromePressStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.92 : 1.0)
+            .opacity(configuration.isPressed ? 0.78 : 1.0)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+    }
+}
+
 private struct PatchActivationRow: View {
     let definition: BYPASS7PatchDefinition
     let isOn: Bool
@@ -980,11 +1011,11 @@ private struct PatchActivationRow: View {
     }
 
     var body: some View {
-        HStack(spacing: 10) {
-            VStack(alignment: .leading, spacing: 4) {
+        HStack(spacing: 14) {
+            VStack(alignment: .leading, spacing: 5) {
                 HStack(spacing: 6) {
                     Text(definition.displayName)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(titleGradient)
                         .animation(
                             reduceMotion ? nil : .linear(duration: 2.4).repeatForever(autoreverses: false),
@@ -1024,26 +1055,33 @@ private struct PatchActivationRow: View {
                 } label: {
                     ZStack(alignment: isOn ? .trailing : .leading) {
                         Capsule(style: .continuous)
-                            .fill(isOn ? AppTheme.accent : Color(uiColor: .tertiaryLabel).opacity(0.38))
-                            .frame(width: 46, height: 28)
+                            .fill(isOn ? AppTheme.accent : Color.white.opacity(0.16))
+                            .frame(width: 58, height: 34)
                         Circle()
-                            .fill(Color.white)
-                            .frame(width: 22, height: 22)
-                            .shadow(color: .black.opacity(0.20), radius: 2, y: 1)
-                            .padding(3)
+                            .fill(isOn ? Color.black : Color.white.opacity(0.72))
+                            .frame(width: 26, height: 26)
+                            .shadow(color: .black.opacity(0.30), radius: 3, y: 1)
+                            .padding(4)
                     }
-                    .frame(width: 48, height: 32)
+                    .frame(width: 60, height: 38)
+                    .animation(.spring(response: 0.28, dampingFraction: 0.78), value: isOn)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(MonochromePressStyle())
                 .disabled(!isEnabled)
                 .accessibilityLabel(definition.displayName)
                 .accessibilityValue(status)
                 .accessibilityAddTraits(isOn ? .isSelected : [])
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 13)
+        .background(Color.white.opacity(isEnabled || isOn ? 0.055 : 0.025), in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                .strokeBorder(Color.white.opacity(isOn ? 0.28 : 0.10), lineWidth: 1)
+        }
         .contentShape(Rectangle())
+        .animation(.easeOut(duration: 0.20), value: isOn)
     }
 }
 
