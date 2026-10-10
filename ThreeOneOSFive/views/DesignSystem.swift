@@ -1,12 +1,13 @@
 import SwiftUI
 
 enum AppTheme {
-    static let accent = Color(red: 0.51, green: 0.04, blue: 0.82)
-    static let onAccent = Color.white
+    // Monochrome CapCut-inspired UI: black canvas, white controls, no purple accents.
+    static let accent = Color.white
+    static let onAccent = Color.black
     static let pageBackground = Color.black
     static let consoleBackground = Color.black
     static let patchCardBackground = Color.black
-    static let cardOutline = Color(uiColor: .separator).opacity(0.38)
+    static let cardOutline = Color.white.opacity(0.18)
     static let pageInset: CGFloat = 16
     static let rowIconSize: CGFloat = 17
     static let rowIconFrame: CGFloat = 28
@@ -28,7 +29,7 @@ struct AppCardBorder: View {
             style: .continuous
         )
         .strokeBorder(
-            Color(uiColor: .separator).opacity(0.22),
+            Color.white.opacity(0.16),
             lineWidth: 0.5
         )
         .accessibilityHidden(true)
@@ -65,17 +66,13 @@ struct AppSearchField: View {
                 .font(.system(size: 14, weight: .medium))
                 .foregroundStyle(.secondary)
                 .accessibilityHidden(true)
-
             TextField(prompt, text: $text)
                 .font(.body)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .submitLabel(.search)
-
             if !text.isEmpty {
-                Button {
-                    text = ""
-                } label: {
+                Button { text = "" } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 14, weight: .medium))
                         .foregroundStyle(.tertiary)
@@ -86,10 +83,7 @@ struct AppSearchField: View {
         }
         .padding(.horizontal, 11)
         .frame(minHeight: 36)
-        .background(
-            Color(uiColor: .secondarySystemFill),
-            in: RoundedRectangle(cornerRadius: 10, style: .continuous)
-        )
+        .background(Color(uiColor: .secondarySystemFill), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
         .padding(.horizontal, AppTheme.pageInset)
         .padding(.vertical, 8)
         .background(.bar)
@@ -101,14 +95,12 @@ struct AppLogo: View {
 
     var body: some View {
         Group {
-            if let icon = UIImage(named: "AppIcon60x60")
-                ?? Bundle.main.path(forResource: "AppIcon60x60@2x", ofType: "png").flatMap(UIImage.init(contentsOfFile:))
-                ?? UIImage(named: "AppIcon") {
+            if let icon = UIImage(named: "CapCutLogo") ?? UIImage(named: "AppIcon") {
                 Image(uiImage: icon)
                     .resizable()
                     .scaledToFill()
             } else {
-                Image(systemName: "slider.horizontal.3")
+                Image(systemName: "scissors")
                     .font(.title2.weight(.semibold))
                     .foregroundStyle(AppTheme.onAccent)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

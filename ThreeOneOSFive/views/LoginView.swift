@@ -17,7 +17,21 @@ struct LoginView: View {
                     Spacer(minLength: 34)
 
                     VStack(spacing: 11) {
-                        Text("BYPASS7 TEXTURAS")
+                        ZStack {
+                            Circle()
+                                .fill(accent.opacity(0.24))
+                                .frame(width: 96, height: 96)
+                                .blur(radius: 18)
+                            AppLogo(size: 76)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 17, style: .continuous)
+                                        .strokeBorder(Color.white.opacity(0.22), lineWidth: 1)
+                                }
+                                .shadow(color: accent.opacity(0.34), radius: 14, y: 4)
+                        }
+                        .frame(height: 88)
+
+                        Text("CapCut")
                             .font(.system(size: 28, weight: .black, design: .rounded))
                             .tracking(0.4)
                             .foregroundStyle(.white)
@@ -52,8 +66,8 @@ struct LoginView: View {
                                             lineWidth: 1
                                         )
                                 }
-                                .foregroundStyle(.white)
-                                .tint(accent)
+                                .foregroundStyle(.black)
+                                .tint(.black)
                                 .onSubmit { submit() }
                         }
 
@@ -74,18 +88,18 @@ struct LoginView: View {
                                 }
                             }
                             .font(.headline)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.black)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 15)
                             .background(
                                 LinearGradient(
-                                    colors: [accent, Color(red: 0.30, green: 0.06, blue: 0.62)],
+                                    colors: [Color.white, Color(red: 0.82, green: 0.82, blue: 0.84)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
                                 in: RoundedRectangle(cornerRadius: 13, style: .continuous)
                             )
-                            .shadow(color: accent.opacity(0.36), radius: 10, y: 4)
+                            .shadow(color: Color.white.opacity(0.16), radius: 10, y: 4)
                         }
                         .disabled(viewModel.isLoading || viewModel.isRevalidating)
                         .buttonStyle(.plain)
@@ -101,21 +115,21 @@ struct LoginView: View {
                     }
                     .padding(22)
                     .background(
-                        Color(red: 0.035, green: 0.025, blue: 0.060),
+                        Color.black,
                         in: RoundedRectangle(cornerRadius: 20, style: .continuous)
                     )
                     .overlay {
                         RoundedRectangle(cornerRadius: 20, style: .continuous)
                             .strokeBorder(
                                 LinearGradient(
-                                    colors: [accent.opacity(0.62), Color.white.opacity(0.08), accent.opacity(0.24)],
+                                    colors: [Color.white.opacity(0.26), Color.clear, Color.white.opacity(0.08)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
                                 lineWidth: 1
                             )
                     }
-                    .shadow(color: accent.opacity(0.16), radius: 20, y: 8)
+                    .shadow(color: Color.white.opacity(0.10), radius: 20, y: 8)
                     .frame(maxWidth: 420)
 
                     Spacer(minLength: 20)
@@ -157,13 +171,13 @@ private struct LoginBackdrop: View {
         GeometryReader { geometry in
             ZStack {
                 LinearGradient(
-                    colors: [Color.black, Color(red: 0.025, green: 0.012, blue: 0.055), Color.black],
+                    colors: [Color.black, Color(red: 0.025, green: 0.025, blue: 0.03), Color.black],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
 
                 RadialGradient(
-                    colors: [accent.opacity(0.30), .clear],
+                    colors: [Color.white.opacity(0.12), .clear],
                     center: .top,
                     startRadius: 0,
                     endRadius: 380
@@ -179,7 +193,7 @@ private struct LoginBackdrop: View {
                     path.addLine(to: CGPoint(x: width * 0.76, y: height * 0.80))
                     path.addLine(to: CGPoint(x: width * 0.92, y: height * 0.92))
                 }
-                .stroke(accent.opacity(0.18), style: StrokeStyle(lineWidth: 1.1, lineCap: .round))
+                .stroke(Color.white.opacity(0.14), style: StrokeStyle(lineWidth: 1.1, lineCap: .round))
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
