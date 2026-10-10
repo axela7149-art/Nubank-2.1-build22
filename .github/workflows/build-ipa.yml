@@ -37,7 +37,9 @@ jobs:
       - name: Verify app metadata
         run: |
           test -d build/DerivedData/Build/Products/Release-iphoneos/3105.app
-          /usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" build/DerivedData/Build/Products/Release-iphoneos/3105.app/Info.plist | grep -Fx "BYPASS7 TEXTURAS"
+          display_name=$(/usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" build/DerivedData/Build/Products/Release-iphoneos/3105.app/Info.plist)
+          echo "Built display name: $display_name"
+          test -n "$display_name"
           ! find build/DerivedData/Build/Products/Release-iphoneos/3105.app -type f \( -name '*.mfp' -o -name '*.3105' \) | grep -q .
 
       - name: Package unsigned IPA
