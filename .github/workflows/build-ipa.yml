@@ -1,0 +1,58 @@
+name: Build BYPASS7 TEXTURAS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          sudo xcode-select -s /Applications/Xcode.app
+          xcodebuild -version
+
+      - name: Build unsigned app
+        run: |
+          set -o pipefail
+          mkdir -p build/DerivedData/Build/Products/Release-iphoneos
+          xcodebuild \
+            -project ThreeOneOSFive.xcodeproj \
+            -target 3105 \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build/DerivedData \
+            CONFIGURATION_BUILD_DIR="$PWD/build/DerivedData/Build/Products/Release-iphoneos" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build | tee build/xcodebuild.log
+
+      - name: Verify app metadata
+        run: |
+          test -d build/DerivedData/Build/Products/Release-iphoneos/3105.app
+          /usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" build/DerivedData/Build/Products/Release-iphoneos/3105.app/Info.plist | grep -Fx "BYPASS7 TEXTURAS"
+          ! find build/DerivedData/Build/Products/Release-iphoneos/3105.app -type f \( -name '*.mfp' -o -name '*.3105' \) | grep -q .
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p build/ipa/Payload
+          cp -R build/DerivedData/Build/Products/Release-iphoneos/3105.app build/ipa/Payload/
+          cd build/ipa
+          zip -qry BYPASS7-TEXTURAS.ipa Payload
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BYPASS7-TEXTURAS-unsigned-ipa
+          path: |
+            build/ipa/BYPASS7-TEXTURAS.ipa
+            build/xcodebuild.log
+          if-no-files-found: error
