@@ -17,21 +17,7 @@ struct LoginView: View {
                     Spacer(minLength: 34)
 
                     VStack(spacing: 11) {
-                        ZStack {
-                            Circle()
-                                .fill(accent.opacity(0.24))
-                                .frame(width: 96, height: 96)
-                                .blur(radius: 18)
-                            AppLogo(size: 76)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 17, style: .continuous)
-                                        .strokeBorder(Color.white.opacity(0.22), lineWidth: 1)
-                                }
-                                .shadow(color: accent.opacity(0.34), radius: 14, y: 4)
-                        }
-                        .frame(height: 88)
-
-                        Text("Nubank")
+                        Text("BYPASS7 TEXTURAS")
                             .font(.system(size: 28, weight: .black, design: .rounded))
                             .tracking(0.4)
                             .foregroundStyle(.white)
