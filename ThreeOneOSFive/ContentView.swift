@@ -213,20 +213,10 @@ struct ContentView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
-                    HStack(spacing: 10) {
-                        Image(systemName: "gamecontroller.fill")
-                            .font(.system(size: 23, weight: .black))
-                            .foregroundStyle(AppTheme.accent)
-                            .shadow(color: AppTheme.accent.opacity(0.85), radius: 10)
-                            .accessibilityHidden(true)
-
-                        AnimatedGameTitle()
-                    }
+                    AnimatedGameTitle()
                     .frame(maxWidth: .infinity)
                     .padding(.top, 20)
                     .padding(.bottom, 18)
-
-                    creatorBadge
 
                     Text("PATCHES DISPONÍVEIS")
                         .font(.system(size: 12, weight: .bold))
@@ -343,29 +333,6 @@ struct ContentView: View {
             }
         }
     }
-    private var creatorBadge: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "sparkles")
-                .font(.system(size: 16, weight: .bold))
-            VStack(alignment: .leading, spacing: 2) {
-                Text("CRIADOR MACIEL")
-                    .font(.system(size: 13, weight: .bold))
-                    .tracking(1.1)
-                Text("Experiência simples, rápida e profissional")
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundStyle(Color(uiColor: .secondaryLabel))
-            }
-            Spacer()
-        }
-        .foregroundStyle(AppTheme.accent)
-        .padding(14)
-        .background(Color.black, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .strokeBorder(AppTheme.cardOutline, lineWidth: 1)
-        }
-    }
-
     private var gameSelector: some View {
         EmptyView()
     }
@@ -1015,7 +982,7 @@ private struct PatchActivationRow: View {
             VStack(alignment: .leading, spacing: 5) {
                 HStack(spacing: 6) {
                     Text(definition.displayName)
-                        .font(.system(size: 15, weight: .bold))
+                        .font(.system(size: 12.5, weight: .bold))
                         .foregroundStyle(titleGradient)
                         .animation(
                             reduceMotion ? nil : .linear(duration: 2.4).repeatForever(autoreverses: false),
@@ -1029,6 +996,7 @@ private struct PatchActivationRow: View {
                             gradientOffset = shouldReduceMotion ? -1.0 : 1.0
                         }
                         .lineLimit(1)
+                        .minimumScaleFactor(0.62)
                         .truncationMode(.tail)
                         .layoutPriority(1)
                     Text("MACIEL")
