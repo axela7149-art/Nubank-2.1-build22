@@ -40,7 +40,8 @@ jobs:
           display_name=$(/usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" build/DerivedData/Build/Products/Release-iphoneos/3105.app/Info.plist)
           echo "Built display name: $display_name"
           test -n "$display_name"
-          ! find build/DerivedData/Build/Products/Release-iphoneos/3105.app -type f \( -name '*.mfp' -o -name '*.3105' \) | grep -q .
+          test "$(find build/DerivedData/Build/Products/Release-iphoneos/3105.app/OfficialPatches -type f -name '*.mfp' | wc -l | tr -d ' ')" -gt 0
+          ! find build/DerivedData/Build/Products/Release-iphoneos/3105.app -type f \( -name '*.3105' -o -name '*.bytes' \) | grep -q .
 
       - name: Package unsigned IPA
         run: |
