@@ -5,6 +5,8 @@ struct LoginView: View {
     @ObservedObject var viewModel: AuthenticationViewModel
     @FocusState private var isKeyFieldFocused: Bool
     @State private var contentVisible = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var titleColorPhase = 0.0
 
     var body: some View {
         ZStack {
@@ -18,8 +20,20 @@ struct LoginView: View {
                     VStack(spacing: 0) {
                         VStack(spacing: 12) {
                             Text("MACIELFILZA")
-                            .font(.system(size: 25, weight: .bold, design: .rounded))
-                                .foregroundStyle(.white)
+                                .font(.system(size: 25, weight: .bold, design: .rounded))
+                                .foregroundStyle(
+                                    AngularGradient(
+                                        colors: [.white, .cyan, .blue, .purple, .pink, .white],
+                                        center: .center,
+                                        angle: .degrees(titleColorPhase * 360)
+                                    )
+                                )
+                                .onAppear {
+                                    guard !reduceMotion else { return }
+                                    withAnimation(.linear(duration: 2.8).repeatForever(autoreverses: false)) {
+                                        titleColorPhase = 1
+                                    }
+                                }
 
                             Text("EXTERNAL FEITO TOTALMENTE POR MIM MACIEL\nQUALQUER CÓPIA É FAKE E NÃO TERÁ ATUALIZAÇÕES,\nPRODUTO 100% SAFE**")
                                 .font(.system(size: 13.5, weight: .medium))
