@@ -13,24 +13,24 @@ struct LoginView: View {
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 22) {
-                    Spacer(minLength: 150)
+                    Spacer(minLength: 80)
 
                     VStack(spacing: 0) {
                         VStack(spacing: 12) {
                             Text("MACIELFILZA")
-                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .font(.system(size: 25, weight: .bold, design: .rounded))
                                 .foregroundStyle(.white)
 
                             Text("EXTERNAL FEITO TOTALMENTE POR MIM MACIEL\nQUALQUER CÓPIA É FAKE E NÃO TERÁ ATUALIZAÇÕES,\nPRODUTO 100% SAFE**")
-                                .font(.system(size: 14.5, weight: .medium))
+                                .font(.system(size: 13.5, weight: .medium))
                                 .multilineTextAlignment(.center)
                                 .lineSpacing(3)
                                 .foregroundStyle(Color.white.opacity(0.86))
                                 .padding(.horizontal, 8)
                         }
                         .padding(.horizontal, 22)
-                        .padding(.top, 28)
-                        .padding(.bottom, 24)
+                        .padding(.top, 22)
+                        .padding(.bottom, 18)
 
                         SecureField("Digite sua key", text: $viewModel.enteredKey)
                             .textInputAutocapitalization(.never)
@@ -41,7 +41,7 @@ struct LoginView: View {
                             .foregroundStyle(.white)
                             .tint(Color.blue)
                             .padding(.horizontal, 15)
-                            .frame(height: 58)
+                            .frame(height: 50)
                             .background(Color.white.opacity(0.035), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -56,33 +56,23 @@ struct LoginView: View {
                         Rectangle()
                             .fill(Color.white.opacity(0.18))
                             .frame(height: 1)
-                            .padding(.top, 20)
+                            .padding(.top, 14)
 
                         HStack(spacing: 0) {
                             Button {
                                 submit()
                             } label: {
-                                Group {
-                                    if viewModel.isLoading {
-                                        ProgressView()
-                                            .tint(Color.blue)
-                                    } else if viewModel.isRevalidating {
-                                        ProgressView()
-                                            .tint(Color.blue)
-                                    } else {
-                                        Text("Injetar")
-                                    }
-                                }
+                                Text("Injetar")
                                 .font(.system(size: 18, weight: .medium))
                                 .foregroundStyle(Color.blue)
-                                .frame(maxWidth: .infinity, minHeight: 62)
+                                .frame(maxWidth: .infinity, minHeight: 52)
                             }
                             .disabled(viewModel.isLoading || viewModel.isRevalidating)
                             .buttonStyle(LoginActionButtonStyle())
 
                             Rectangle()
                                 .fill(Color.white.opacity(0.18))
-                                .frame(width: 1, height: 62)
+                                .frame(width: 1, height: 52)
 
                             Button {
                                 viewModel.enteredKey = ""
@@ -92,7 +82,7 @@ struct LoginView: View {
                                 Text("Cancelar")
                                     .font(.system(size: 18, weight: .medium))
                                     .foregroundStyle(Color.red.opacity(0.92))
-                                    .frame(maxWidth: .infinity, minHeight: 62)
+                                    .frame(maxWidth: .infinity, minHeight: 52)
                             }
                             .buttonStyle(LoginActionButtonStyle())
                         }
@@ -103,15 +93,15 @@ struct LoginView: View {
                             .strokeBorder(Color.white.opacity(0.08), lineWidth: 1)
                     }
                     .shadow(color: .black.opacity(0.65), radius: 28, y: 12)
-                    .frame(maxWidth: 430)
+                    .frame(maxWidth: 320)
 
                     if viewModel.isLoading || viewModel.isRevalidating {
                         VStack(spacing: 10) {
                             ProgressView()
                                 .tint(Color.white.opacity(0.72))
-                                .scaleEffect(1.15)
+                                .scaleEffect(1.0)
                             Text(viewModel.isRevalidating ? "Revalidando sua licença..." : "Validando sua key...")
-                                .font(.system(size: 15, weight: .medium))
+                                .font(.system(size: 13.5, weight: .medium))
                                 .foregroundStyle(Color.white.opacity(0.52))
                         }
                         .padding(.top, 4)
