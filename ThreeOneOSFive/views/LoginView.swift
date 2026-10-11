@@ -5,8 +5,6 @@ struct LoginView: View {
     @ObservedObject var viewModel: AuthenticationViewModel
     @FocusState private var isKeyFieldFocused: Bool
     @State private var contentVisible = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var titleColorPhase = 0.0
 
     var body: some View {
         ZStack {
@@ -15,25 +13,13 @@ struct LoginView: View {
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 22) {
-                    Spacer(minLength: 80)
+                    Spacer(minLength: 135)
 
                     VStack(spacing: 0) {
                         VStack(spacing: 12) {
                             Text("MACIELFILZA")
                                 .font(.system(size: 25, weight: .bold, design: .rounded))
-                                .foregroundStyle(
-                                    AngularGradient(
-                                        colors: [.white, .cyan, .blue, .purple, .pink, .white],
-                                        center: .center,
-                                        angle: .degrees(titleColorPhase * 360)
-                                    )
-                                )
-                                .onAppear {
-                                    guard !reduceMotion else { return }
-                                    withAnimation(.linear(duration: 2.8).repeatForever(autoreverses: false)) {
-                                        titleColorPhase = 1
-                                    }
-                                }
+                                .foregroundStyle(.white)
 
                             Text("EXTERNAL FEITO TOTALMENTE POR MIM MACIEL\nQUALQUER CÓPIA É FAKE E NÃO TERÁ ATUALIZAÇÕES,\nPRODUTO 100% SAFE**")
                                 .font(.system(size: 13.5, weight: .medium))
@@ -78,7 +64,7 @@ struct LoginView: View {
                             } label: {
                                 Text("Injetar")
                                 .font(.system(size: 18, weight: .medium))
-                                .foregroundStyle(Color.blue)
+                                .foregroundStyle(.white)
                                 .frame(maxWidth: .infinity, minHeight: 52)
                             }
                             .disabled(viewModel.isLoading || viewModel.isRevalidating)
@@ -95,7 +81,7 @@ struct LoginView: View {
                             } label: {
                                 Text("Cancelar")
                                     .font(.system(size: 18, weight: .medium))
-                                    .foregroundStyle(Color.red.opacity(0.92))
+                                .foregroundStyle(.white)
                                     .frame(maxWidth: .infinity, minHeight: 52)
                             }
                             .buttonStyle(LoginActionButtonStyle())
